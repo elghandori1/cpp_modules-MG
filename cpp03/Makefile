@@ -1,5 +1,5 @@
 
-NAME = OPEN
+NAME = ClapTrap
 
 SRCS = ClapTrap.cpp main.cpp
 
