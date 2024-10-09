@@ -13,19 +13,22 @@ ClapTrap::~ClapTrap() {
 
 ClapTrap::ClapTrap(const ClapTrap& other)
 {
-	std::cout << "<ClapTrap constructor has been called" << std::endl;
-	*this = other; 
+	std::cout << "<ClapTrap copy constructor has been called" << std::endl;
+	this->name = other.name;
+    this->hitPoints = other.hitPoints;
+    this->energyPoints = other.energyPoints;
+    this->attackDamage = other.attackDamage;
 }
 
-ClapTrap& ClapTrap::operator=(const ClapTrap &Clap)
+ClapTrap& ClapTrap::operator=(const ClapTrap &other)
 {
     std::cout << "ClapTrap overloading assignment operator called" << std::endl;
-    if (this != &Clap)
+    if (this != &other)
     {
-        this->name = Clap.name;
-        this->hitPoints = Clap.hitPoints;
-        this->energyPoints = Clap.energyPoints;
-        this->attackDamage = Clap.attackDamage;
+        this->name = other.name;
+        this->hitPoints = other.hitPoints;
+        this->energyPoints = other.energyPoints;
+        this->attackDamage = other.attackDamage;
     }
     return (*this);
 }
@@ -62,6 +65,6 @@ void ClapTrap::beRepaired(unsigned int amount)
         << " hit points. Current hit points: " << this->hitPoints
         <<" current energyPoints: " << this->energyPoints << std::endl;
     } else {
-        std::cout << "ClapTrap " << name << " can't repair itself. Not enough energy or hit points!" << std::endl;
+        std::cout << "ClapTrap " << this->name << " can't repair itself. Not enough energy or hit points!" << std::endl;
     }
 }
