@@ -1,7 +1,7 @@
 #include "ClapTrap.hpp"
 
-int main(){
-   
+int main()
+{
     ClapTrap claptrap("CLTP");
     claptrap.attack("target1");
     claptrap.takeDamage(5);
@@ -16,6 +16,7 @@ int main(){
         claptrap.takeDamage(27);
         claptrap.beRepaired(21);
     */
+
     /*
     //------copy constructor:
 
@@ -28,13 +29,16 @@ int main(){
 
     /*
     //------ overloading assignment:
-  
-        ClapTrap claptrap("CLTP");
-        ClapTrap claptrap2 = claptrap;
+
+        ClapTrap claptrap("CLTP-00");
+        ClapTrap claptrap2("CLTP-01");
+        claptrap2= claptrap;
         claptrap2.attack("enemy");
         claptrap2.takeDamage(6);
         claptrap2.takeDamage(2);
     */
+
+
 
     return 0;
 }
