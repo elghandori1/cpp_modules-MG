@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   DiamondTrap.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 16:32:35 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/10/12 16:32:36 by moel-gha         ###   ########.fr       */
+/*   Created: 2024/10/12 16:33:49 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:33:50 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ClapTrap.hpp"
+#ifndef DIAMONDTRAP_HPP
+#define DIAMONDTRAP_HPP
+#include <iostream>
+
 #include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
-int main()
+class DiamondTrap : public FragTrap, public ScavTrap
 {
-    ScavTrap scav("SCCT-02");
-    scav.attack("enemy2");
-    scav.takeDamage(2);
-    scav.beRepaired(5);
-    scav.guardGate();
+private:
+    std::string name;
 
-    return 0;
-}
+public:
+    DiamondTrap(std::string name);
+    DiamondTrap(const DiamondTrap &copy);
+	DiamondTrap &operator=(const DiamondTrap &copy);
+    DiamondTrap(void);
+    ~DiamondTrap();
+    void attack(const std::string& target);
+    void whoAmI();
 
+};
+#endif 

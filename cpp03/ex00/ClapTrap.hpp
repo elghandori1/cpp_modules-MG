@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 16:31:51 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:31:52 by moel-gha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CLAPTRAP_HPP
 #define CLAPTRAP_HPP
 
@@ -11,7 +23,7 @@ private:
 
 public:
     ClapTrap();
-    ClapTrap(const std::string& name);
+    ClapTrap(std::string name);
     ClapTrap(const ClapTrap &other);
 	ClapTrap &operator=(const ClapTrap &other);
     ~ClapTrap();

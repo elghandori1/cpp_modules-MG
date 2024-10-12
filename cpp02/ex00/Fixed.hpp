@@ -6,7 +6,7 @@
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 21:22:20 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/10/05 21:31:20 by moel-gha         ###   ########.fr       */
+/*   Updated: 2024/10/12 12:04:47 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ private:
 
 public:
     Fixed();
-    Fixed(const Fixed &other);
+    // Fixed(const Fixed &other);
     ~Fixed();
-    Fixed& operator=(const Fixed &other);
+    // Fixed& operator=(const Fixed &other);
     int getRawBits(void) const;
     void setRawBits( int const raw);
 };

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 16:32:21 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:32:22 by moel-gha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap()
@@ -9,7 +21,7 @@ ClapTrap::ClapTrap()
     this->attackDamage = 0;
 }
 
-ClapTrap::ClapTrap(const std::string& name)
+ClapTrap::ClapTrap(std::string name)
     : name(name), hitPoints(10), energyPoints(10), attackDamage(0) {
     std::cout << "ClapTrap " << this->name << " created!" << std::endl;
 }
@@ -37,7 +49,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &other)
 }
 
 ClapTrap::~ClapTrap() {
-    std::cout << "ClapTrap " << this->name << " ~destroyed!" << std::endl;
+    std::cout << "ClapTrap " << this->name << " ~destroyed." << std::endl;
 }
 
 void ClapTrap::attack(const std::string& target) 

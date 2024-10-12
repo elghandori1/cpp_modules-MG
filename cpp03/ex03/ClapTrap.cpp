@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 16:31:49 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/10/12 16:31:50 by moel-gha         ###   ########.fr       */
+/*   Created: 2024/10/12 16:33:41 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:33:42 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 ClapTrap::ClapTrap()
 {
-    std::cout << "Default Constructor has been called!.\n";
-    this->name = "default";
+    std::cout << "ClapTrap Default Constructor has been called!.\n";
+	this->name = "default";
     this->hitPoints = 10;
     this->energyPoints = 10;
     this->attackDamage = 0;
@@ -49,7 +49,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &other)
 }
 
 ClapTrap::~ClapTrap() {
-    std::cout << "ClapTrap " << this->name << " ~destroyed." << std::endl;
+    std::cout << "ClapTrap " << this->name << " ~destroyed!" << std::endl;
 }
 
 void ClapTrap::attack(const std::string& target) 

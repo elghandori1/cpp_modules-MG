@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 16:32:44 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/10/12 16:32:45 by moel-gha         ###   ########.fr       */
+/*   Created: 2024/10/12 16:33:57 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:33:58 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCAVTRAP_HPP
-#define SCAVTRAP_HPP
+#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
-#include "ClapTrap.hpp"
-
-class ScavTrap : public ClapTrap
+int main()
 {
-public:
-    ScavTrap(std::string name);
-    ScavTrap();
-    ~ScavTrap();
-    ScavTrap(const ScavTrap &other);
-    ScavTrap &operator=(const ScavTrap&other);
-    void attack(const std::string &target);
-    void guardGate();
-};
+    DiamondTrap diamond("DMCT-04");
+    diamond.attack("target");
+    diamond.takeDamage(40);
+    diamond.beRepaired(14);
+    diamond.guardGate();
+    diamond.highFivesGuys();
+    diamond.whoAmI();
 
-#endif
+    return 0;
+}

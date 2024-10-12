@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 16:33:23 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/10/12 16:33:24 by moel-gha         ###   ########.fr       */
+/*   Created: 2024/10/12 16:34:04 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:34:05 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ ScavTrap::~ScavTrap() {
     std::cout << "ScavTrap " << this->name << " ~destroyed.\n";
 }
 
-void ScavTrap::attack(const std::string& target)
-{
+void ScavTrap::attack(const std::string& target) {
     if (hitPoints > 0 && energyPoints > 0) {
         std::cout << "ScavTrap " << this->name << " attacks " << target
         << ", causing " << this->attackDamage << " points of damage!\n";

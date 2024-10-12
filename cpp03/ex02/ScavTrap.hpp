@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 16:33:27 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:33:28 by moel-gha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SCAVTRAP_HPP
 #define SCAVTRAP_HPP
 
@@ -6,7 +18,7 @@
 class ScavTrap : public ClapTrap
 {
 public:
-    ScavTrap(const std::string &name);
+    ScavTrap(std::string name);
     ScavTrap();
     ~ScavTrap();
     ScavTrap(const ScavTrap &other);
