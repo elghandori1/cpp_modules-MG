@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 21:22:20 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/10/12 16:38:17 by moel-gha         ###   ########.fr       */
+/*   Created: 2024/10/12 16:33:57 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:33:58 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
-#define FIXED_HPP
+#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
-class Fixed {
-private:
-    int value;
-    static const int fractionalBits = 8;
+int main()
+{
+    DiamondTrap diamond("DMCT-04");
+    diamond.attack("target");
+    diamond.takeDamage(40);
+    diamond.beRepaired(14);
+    diamond.guardGate();
+    diamond.highFivesGuys();
+    diamond.whoAmI();
 
-public:
-    Fixed();
-    Fixed(const Fixed &other);
-    ~Fixed();
-    Fixed& operator=(const Fixed &other);
-    int getRawBits(void) const;
-    void setRawBits( int const raw);
-};
-
-#endif 
+    return 0;
+}

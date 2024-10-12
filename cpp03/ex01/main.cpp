@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: moel-gha <moel-gha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 21:22:20 by moel-gha          #+#    #+#             */
-/*   Updated: 2024/10/12 16:38:17 by moel-gha         ###   ########.fr       */
+/*   Created: 2024/10/12 16:32:35 by moel-gha          #+#    #+#             */
+/*   Updated: 2024/10/12 16:32:36 by moel-gha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
-#define FIXED_HPP
+#include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
-class Fixed {
-private:
-    int value;
-    static const int fractionalBits = 8;
+int main()
+{
+    ScavTrap scav("SCCT-02");
+    scav.attack("enemy2");
+    scav.takeDamage(2);
+    scav.beRepaired(5);
+    scav.guardGate();
 
-public:
-    Fixed();
-    Fixed(const Fixed &other);
-    ~Fixed();
-    Fixed& operator=(const Fixed &other);
-    int getRawBits(void) const;
-    void setRawBits( int const raw);
-};
+    return 0;
+}
 
-#endif 
