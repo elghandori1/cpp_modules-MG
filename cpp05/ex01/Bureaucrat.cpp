@@ -1,6 +1,13 @@
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat() : name("Default"), grade(1){}
+Bureaucrat::Bureaucrat() : name("Default")
+{
+    grade = 10;
+    if (grade < 1)
+        throw Bureaucrat::GradeTooHighException();
+    if (grade > 150)
+        throw Bureaucrat::GradeTooLowException();
+}
 
 Bureaucrat::Bureaucrat(std::string name, int grade) : name(name), grade(grade)
 {
@@ -65,8 +72,8 @@ void Bureaucrat::signForm(Form &sig)
 		std::cout << name << " couldn't sign " << sig.getName() << "because " << grade <<"\n";
 }
 
-std::ostream& operator<<(std::ostream& out, const Bureaucrat &bureaucrat)
+std::ostream& operator<<(std::ostream& out, const Bureaucrat &bur)
 {
-    out << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << ".";
+    out << bur.getName() << ", bureaucrat grade " << bur.getGrade() << ".";
     return (out);
 }

@@ -28,14 +28,14 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& copy)
     return (*this);
 }
 
-const char* Bureaucrat::GradeTooHighException::what() const 
+const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
-    return "Grade is too High";
+    return "Grade is too High!";
 }
 
-const char* Bureaucrat::GradeTooLowException::what() const 
+const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
-    return "Grade is too Low";
+    return "Grade is too Low!";
 }
 
 void Bureaucrat::increment()
@@ -62,6 +62,26 @@ int Bureaucrat::getGrade() const
 std::string Bureaucrat::getName() const
 {
     return (name);
+}
+
+void Bureaucrat::signForm(AForm &sig)
+{
+	if (sig.getsigned())
+		std::cout << name << " signed " << sig.getName() <<std::endl;
+	else
+		std::cout << name << " couldn't sign " << sig.getName() << "because " << grade <<"\n";
+}
+
+void Bureaucrat::executeForm(AForm const &form)
+{
+	try{
+		form.execute(*this);
+		std::cout << name << " executed " << form.getName() <<std::endl;
+	}
+	catch(const std::exception &e)
+	{
+		std::cout << name << " couldn't execute  " << form.getName() <<std::endl;
+	}
 }
 
 std::ostream& operator<<(std::ostream& out, const Bureaucrat &bur)

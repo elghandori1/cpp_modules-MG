@@ -5,7 +5,7 @@ int main()
 {
 	try
 	{
-		Bureaucrat B1("mohamed", 1), B2("said", 4);
+		Bureaucrat B1("mohamed", 1);
 
 		Form f1("alex",2,140);
 
@@ -13,7 +13,7 @@ int main()
 		B1.signForm(f1);
 
 		std::cout << B1 <<"\n";
-		std::cout << B2 << "\n";
+		std::cout << f1<< "\n";
 	}
 	catch(const std::exception& e)
 	{
