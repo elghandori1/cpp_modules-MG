@@ -39,7 +39,7 @@ const char *AForm::GradeTooHighException::what() const throw()
 	return ("Grade is too High!");
 }
 
-bool AForm::getsigned() const
+bool AForm::isSigned() const
 {
 	return (is_signed);
 }
@@ -70,7 +70,7 @@ void AForm::beSigned(Bureaucrat &bur)
 AForm::~AForm(){}
 
 std::ostream &operator<<(std::ostream &op,const AForm &fro){
-	op << fro.getName() << "-" <<fro.getsigned()<< "-" << fro.getGradeSign()<< "-" << fro.getGradeExecute();
+	op << fro.getName() << "-" <<fro.isSigned()<< "-" << fro.getGradeSign()<< "-" << fro.getGradeExecute();
 	return (op);
 }
 

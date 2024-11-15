@@ -66,7 +66,7 @@ std::string Bureaucrat::getName() const
 
 void Bureaucrat::signForm(AForm &sig)
 {
-	if (sig.getsigned())
+	if (sig.isSigned())
 		std::cout << name << " signed " << sig.getName() <<std::endl;
 	else
 		std::cout << name << " couldn't sign " << sig.getName() << "because " << grade <<"\n";

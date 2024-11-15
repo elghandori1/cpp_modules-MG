@@ -19,7 +19,7 @@ class AForm
 		AForm &operator=(const AForm &copy);
         virtual ~AForm();
 		std::string getName() const;
-		bool getsigned() const;
+		bool isSigned() const;
 		int getGradeSign() const;
 		int getGradeExecute() const;
 		class GradeTooHighException: public std::exception

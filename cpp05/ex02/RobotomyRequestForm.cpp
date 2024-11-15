@@ -27,14 +27,18 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &c
 
 void RobotomyRequestForm::execute(Bureaucrat const &exec) const
 {
-    if (!this->getsigned()){
+    if (!this->isSigned()){
         throw AForm::GradeTooLowException();
 	}
 
     if (exec.getGrade() > this->getGradeExecute()){
     	throw AForm::GradeTooLowException();
 	}
-	std::srand(std::time(NULL));
+
+	std::cout << "Drilling noises..." << std::endl;
+	
+	std::srand(std::time(0));
+
 	if (std::rand()%2 == 0)
 	{
 		std::cout << target << " has been robotomized successfully! " <<std::endl;
