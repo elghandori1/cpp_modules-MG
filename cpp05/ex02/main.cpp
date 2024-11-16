@@ -29,7 +29,7 @@ int main()
 		std::cout << b1 <<std::endl;
 		std::cout << sh <<std::endl;
 	}
-	catch(const std::exception& e)
+	catch(std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
 	}

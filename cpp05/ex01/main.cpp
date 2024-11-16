@@ -15,7 +15,7 @@ int main()
 		std::cout << B1 <<"\n";
 		std::cout << f1<< "\n";
 	}
-	catch(const std::exception& e)
+	catch(std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
 	}

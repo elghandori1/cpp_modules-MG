@@ -20,7 +20,7 @@ int main()
 		delete  rrf;
 		
 	}
-	catch(const std::exception& e)
+	catch(std::exception& e)
 	{
 		std::cerr << e.what() << '\n';
 		if (rrf != NULL) 
