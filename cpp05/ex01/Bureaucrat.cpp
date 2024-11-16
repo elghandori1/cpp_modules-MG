@@ -23,7 +23,7 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& copy)
 {
     if (this != &copy)
     {
-        this->grade = copy.grade;
+        grade = copy.grade;
     }
     return (*this);
 }
@@ -54,12 +54,12 @@ void Bureaucrat::decrement()
 
 Bureaucrat::~Bureaucrat(){}
 
-int Bureaucrat::getGrade() const
+int Bureaucrat::getGrade()
 {
     return (grade);
 }
 
-std::string Bureaucrat::getName() const
+std::string Bureaucrat::getName()
 {
     return (name);
 }
@@ -69,10 +69,10 @@ void Bureaucrat::signForm(Form &sig)
 	if (sig.isSigned())
 		std::cout << name << " signed " << sig.getName() <<std::endl;
 	else
-		std::cout << name << " couldn't sign " << sig.getName() << "because " << grade <<"\n";
+		std::cout << name << " couldn't sign " << sig.getName() << " because Invalid Grade.\n";
 }
 
-std::ostream& operator<<(std::ostream& out, const Bureaucrat &bur)
+std::ostream& operator<<(std::ostream& out, Bureaucrat &bur)
 {
     out << bur.getName() << ", bureaucrat grade " << bur.getGrade() << ".";
     return (out);

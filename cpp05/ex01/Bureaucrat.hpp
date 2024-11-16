@@ -26,13 +26,13 @@ class Bureaucrat
             public:
 				const char* what() const throw();
         };
-        std::string getName(void) const;
-        int getGrade(void) const;  
+        std::string getName(void);
+        int getGrade(void);  
         void increment(void);
         void decrement(void);
         void signForm(Form &sig);
 };
 
-std::ostream& operator<<(std::ostream& out, const Bureaucrat &bur);
+std::ostream& operator<<(std::ostream& out,Bureaucrat &bur);
  
 #endif
