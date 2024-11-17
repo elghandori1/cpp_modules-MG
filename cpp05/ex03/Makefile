@@ -1,4 +1,4 @@
-NAME = Form
+NAME = INTERN
 
 SRCS = Bureaucrat.cpp\
 	AForm.cpp\
