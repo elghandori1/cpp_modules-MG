@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME=Weapon
-CC	= g++
+CC	= c++
 CPPFLAGS=-Wall -Wextra -Werror -std=c++98
 SRC = HumanA.cpp HumanB.cpp main.cpp  Weapon.cpp 
 OBJ = $(SRC:.cpp=.o)

@@ -16,7 +16,7 @@ SRCS = ClapTrap.cpp main.cpp ScavTrap.cpp FragTrap.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
-CXX = g++
+CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
