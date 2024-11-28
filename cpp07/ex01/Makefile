@@ -1,19 +1,13 @@
-NAME=Template
-
+NAME=iter
 CXX=c++
-
 CXXFLAGS= -Wall -Wextra -Werror -std=c++98
-
 FILE=main.cpp
-
-INCLUDE=whatever.hpp
-
+INCLUDE=iter.hpp
 OBJ=$(FILE:.cpp=.o)
 
 all: $(NAME)
 $(NAME): $(OBJ)
 	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
-	
 $(OBJ):$(INCLUDE)
 
 clean:
