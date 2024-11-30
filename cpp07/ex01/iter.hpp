@@ -1,9 +1,8 @@
-#pragma once
 #include <iostream>
 
-template <typename T, typename F>
+template <typename T>
 
-void iter(T* array, size_t length, F func)
+void iter(T* array, size_t length,void (*func)(T& elm))
 { 
     for (size_t i = 0; i < length; i++)
     {
@@ -14,7 +13,7 @@ void iter(T* array, size_t length, F func)
 
 template <typename T> 
 
-void printElement(const T& element)
+void printElement(T& element)
 { 
     std::cout << element << std::endl;
 }
