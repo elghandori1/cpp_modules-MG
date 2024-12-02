@@ -1,14 +1,13 @@
 #include <iostream>
 
-template <typename T>
+template <typename T, typename F>
 
-void iter(T* array, size_t length,void (*func)(T& elm))
+void iter(T* array, size_t length,void (*func)(F& elm))
 { 
     for (size_t i = 0; i < length; i++)
     {
         func(array[i]);
     }
-
 }
 
 template <typename T> 
