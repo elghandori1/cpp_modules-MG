@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 TARGET = replace
-CXX = g++
+CXX = c++
 CXXFLAGS = -Wall -Wextra -std=c++98
 
 OBJS = main.o Replace.o
