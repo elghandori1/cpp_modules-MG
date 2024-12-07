@@ -1,5 +1,5 @@
 #include <iostream>
-#include<algorithm>
+#include <algorithm>
 #include <vector>
 
 class Span
@@ -10,10 +10,10 @@ class Span
 	public:
 		Span();
 		Span(unsigned int N);
-		Span(const Span &copy);
 		void addNumber(int N);
         int shortestSpan();
 		int longestSpan();
+		Span(const Span &copy);
 		Span &operator=(const Span &copy);
 		~Span();
 		template <typename T> 
@@ -25,7 +25,7 @@ class Span
 			}
 			else
 			{
-				throw std::out_of_range("Span cannot hold all these elements!");
+				throw std::out_of_range("Span is full!");
 			}
 		}
 };
