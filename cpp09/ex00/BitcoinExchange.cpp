@@ -13,37 +13,39 @@ void BitcoinExchange::process()
     std::string file, key, value;
     while (std::getline(DataBase, file))
     {
-        if (file != "date,exchange_rate" && !file.empty())
-        {
+        if (file != "date,exchange_rate" && !file.empty()) {
             key.insert(0, file, 0, 10);
-            value.insert(0, file, 11, file.find('\n',11));
+            value.insert(0, file, 11, file.find('\n', 11));
             data[key] = value;
             key.clear();
             value.clear();
         }
         file.clear();
     }
-    int i =0;
+
+    int i = 0;
     bool firstLine = true;
     bool dataFound = false;
     while (std::getline(inputFile, file))
     {
-        if (file.empty()){
+        if (file.empty()) {
             continue;
         }
         if (firstLine)
         {
-            if (file != "date | value")
-            {
+            if (file != "date | value") {
                 throw std::runtime_error("Missing the header \"date | value\"");
             }
             firstLine = false;
-        }
-        else
-        {
+        } else {
             size_t pos = file.find(" | ");
-            key = file.substr(0, pos);
-            value = file.substr(pos + 3);
+            if (pos == std::string::npos) {
+                key = file;
+                value = "\0";
+            } else {
+                key = file.substr(0, pos);
+                value = file.substr(pos + 3);
+            }
             this->file[key] = value;
             dataFound = true;
             _File[i++] = std::make_pair(key, value);
@@ -54,36 +56,53 @@ void BitcoinExchange::process()
     }
     if (!dataFound)
         throw std::runtime_error("The file does not contain any data after the header.");
+   // seewdata();
 }
+
+
+// void BitcoinExchange::seewdata()
+// {
+//     std::map<int, std::pair<std::string, std::string> >::iterator it;
+//     for (it = _File.begin(); it != _File.end(); ++it) {
+//         std::cout << "Index: " << it->first << ", Date: " << it->second.first << ", Value: " << it->second.second << std::endl;
+//     }
+// }
+
 
 void BitcoinExchange::processInputFile()
 {
-    std::map<int, std::pair<std::string, std::string> >::iterator it_2 = _File.begin();
-    while (it_2 != _File.end())
-    { 
-        if (!check_file(it_2->second)) 
-        { 
-            it_2++; continue; 
-        }
+std::map<std::string , std::string>::iterator it_f;
+std::map<int , std::pair<std::string, std::string> >::iterator it_2 = _File.begin();
+std::map<std::string , std::string>::reverse_iterator i = file.rbegin();
 
-       std::map<std::string, std::string>::iterator it = file.lower_bound(it_2->second.first);
-        if (it != file.end() && it->first > it_2->second.first)
-            it--;
-
-        float x = atof(it->second.c_str());
-        float y = atof(it_2->second.second.c_str());
-
-        std::cout << std::fixed << std::setprecision(2) << it_2->second.first 
-        << " => " << it_2->second.second << " = " << x * y << std::endl;
-
-        it_2++;
-    }
+float x,y;
+	while (it_2 != _File.end())
+	{
+		if (!check_file(it_2))
+		{
+			it_2++;
+			continue ;
+		}
+		it_f = file.lower_bound(it_2->second.first);
+		if ((it_f != file.end()) && it_f->first > it_2->second.first)
+			it_f--;
+		x = atof(it_f->second.c_str());
+		y = atof(it_2->second.second.c_str());
+		if (it_2->second.first > i->first)
+		{
+			x = atof(i->second.c_str());
+			std::cout  << std::fixed << std::setprecision(2) << it_2->second.first << " => " << it_2->second.second << " = " << x * y <<std::endl;
+		}
+		else
+			std::cout  << std::fixed << std::setprecision(2) << it_2->second.first << " => " << it_2->second.second << " = " << x * y <<std::endl;
+		it_2++;
+	}
 }
 
-bool BitcoinExchange::check_file(const std::pair<std::string, std::string>& entry)
+bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::string> >::iterator& it)
 {
-    std::string date = entry.first;
-    std::string value = entry.second;
+	std::string date = it->second.first;
+	std::string value = it->second.second;
 
     // Check the date format
     if (!string_to_date(date))
@@ -152,30 +171,30 @@ bool BitcoinExchange::string_to_date(const std::string &time)
     return true;
 }
 
-bool BitcoinExchange::check_atof(const std::string &value)
+bool BitcoinExchange::check_atof(std::string value)
 {
-    int point = 0;
-    for (unsigned long i = 0; i < value.size(); i++)
-    {
-        if (value[i] == '-' && i == 0)
-            i++;
-
-        if ((value[i] < '0' || value[i] > '9') && value[i] != '.')
-        {
-            std::cerr << "Error: bad value." << std::endl;
-            return false;
-        }
-        else if (value[i] == '.')
-        {
-            point++;
-            if (point > 1 || i == 0 || i == value.size() - 1 || (value[i - 1] < '0' || value[i - 1] > '9'))
-            {
-                std::cerr << "Error: bad value." << std::endl;
-                return false;
-            }
-        }
-    }
-    return true;
+int point = 0;
+	for(unsigned long i=0; i < value.size(); i++)
+	{
+		if (value[i] == '-' && i ==0)
+			i++;
+		if ((value[i] < '0' || value[i] > '9') && value[i] != ' ' && value[i] != '.')
+		{	
+			std::cerr << "Error: bad value. " <<std::endl;
+			return false;
+		}
+		else if (value[i] == '.' && i > 1)
+		{
+			point++;
+			if (value[i -1] < '0' || value[i - 1] > '9' || point > 1 
+				|| ((i < value.size() && ( value[i + 1] < '0' || value[i + 1] > '9'))))
+			{
+				std::cerr << "Error: bad value. " <<std::endl;
+				return false;
+			}
+		}
+	}
+	return (true);
 }
 
 BitcoinExchange::~BitcoinExchange() {}
