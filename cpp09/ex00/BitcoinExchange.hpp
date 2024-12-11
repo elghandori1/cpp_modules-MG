@@ -13,11 +13,12 @@ private:
     std::ifstream DataBase, inputFile; 
     std::map<std::string ,std::string> data;
     std::map<std::string ,std::string> file;
-    bool check_file(std::map<std::string, std::string>::iterator &it);
+    std::map<int , std::pair<std::string, std::string> > _File;
+    bool check_file(const std::pair<std::string, std::string>& entry);
     bool string_to_date(const std::string &time);
     bool check_atof(const std::string &value);
     void process();
-    void seewdata();
+   // void seewdata();
 public:
     BitcoinExchange(const std::string& Filename);
     void processInputFile(void);

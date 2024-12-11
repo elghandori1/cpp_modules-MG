@@ -23,7 +23,7 @@ void BitcoinExchange::process()
         }
         file.clear();
     }
-
+    int i =0;
     bool firstLine = true;
     bool dataFound = false;
     while (std::getline(inputFile, file))
@@ -46,6 +46,7 @@ void BitcoinExchange::process()
             value = file.substr(pos + 3);
             this->file[key] = value;
             dataFound = true;
+            _File[i++] = std::make_pair(key, value);
             key.clear();
             value.clear();
         }
@@ -57,35 +58,32 @@ void BitcoinExchange::process()
 
 void BitcoinExchange::processInputFile()
 {
-    std::map<std::string, std::string>::iterator it_2 = file.begin();
-
-    while (it_2 != file.end())
-    {
-        if (!check_file(it_2))
-        {
-            it_2++;
-            continue;
+    std::map<int, std::pair<std::string, std::string> >::iterator it_2 = _File.begin();
+    while (it_2 != _File.end())
+    { 
+        if (!check_file(it_2->second)) 
+        { 
+            it_2++; continue; 
         }
 
-        std::map<std::string, std::string>::iterator it_f = file.lower_bound(it_2->first);
-        if (it_f != file.end() && it_f->first > it_2->first)
-            it_f--;
+       std::map<std::string, std::string>::iterator it = file.lower_bound(it_2->second.first);
+        if (it != file.end() && it->first > it_2->second.first)
+            it--;
 
-        float x = atof(it_f->second.c_str());
-        float y = atof(it_2->second.c_str());
+        float x = atof(it->second.c_str());
+        float y = atof(it_2->second.second.c_str());
 
-        std::cout << std::fixed << std::setprecision(2) 
-                  << it_2->first << " => " << it_2->second 
-                  << " = " << x * y << std::endl;
+        std::cout << std::fixed << std::setprecision(2) << it_2->second.first 
+        << " => " << it_2->second.second << " = " << x * y << std::endl;
 
         it_2++;
     }
 }
 
-bool BitcoinExchange::check_file(std::map<std::string, std::string>::iterator &it)
+bool BitcoinExchange::check_file(const std::pair<std::string, std::string>& entry)
 {
-    std::string date = it->first;
-    std::string value = it->second;
+    std::string date = entry.first;
+    std::string value = entry.second;
 
     // Check the date format
     if (!string_to_date(date))
