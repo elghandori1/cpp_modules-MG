@@ -56,7 +56,7 @@ void BitcoinExchange::process()
     }
     if (!dataFound)
         throw std::runtime_error("The file does not contain any data after the header.");
-   // seewdata();
+    //seewdata();
 }
 
 
@@ -68,14 +68,13 @@ void BitcoinExchange::process()
 //     }
 // }
 
-
 void BitcoinExchange::processInputFile()
 {
 std::map<std::string , std::string>::iterator it_f;
 std::map<int , std::pair<std::string, std::string> >::iterator it_2 = _File.begin();
-std::map<std::string , std::string>::reverse_iterator i = file.rbegin();
+std::map<std::string , std::string>::reverse_iterator i = data.rbegin();
 
-float x,y;
+    float x,y;
 	while (it_2 != _File.end())
 	{
 		if (!check_file(it_2))
@@ -83,8 +82,8 @@ float x,y;
 			it_2++;
 			continue ;
 		}
-		it_f = file.lower_bound(it_2->second.first);
-		if ((it_f != file.end()) && it_f->first > it_2->second.first)
+		it_f = data.lower_bound(it_2->second.first);
+		if ((it_f != data.end()) && it_f->first > it_2->second.first)
 			it_f--;
 		x = atof(it_f->second.c_str());
 		y = atof(it_2->second.second.c_str());
