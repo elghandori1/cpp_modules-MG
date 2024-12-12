@@ -6,6 +6,7 @@
 #include <vector>
 #include <iomanip>
 #include <cstring>
+#include <sstream>
 
 
 class BitcoinExchange {
@@ -17,8 +18,9 @@ private:
     bool check_file(std::map<int , std::pair<std::string, std::string> >::iterator& it);
     bool string_to_date(const std::string &time);
     bool check_atof(std::string value);
-    void process();
-   void seewdata();
+    void processDatabase();
+    void processInput();
+    void seewdata();
 public:
     BitcoinExchange(const std::string& Filename);
     void processInputFile(void);
