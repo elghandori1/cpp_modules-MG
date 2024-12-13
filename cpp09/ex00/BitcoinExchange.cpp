@@ -41,36 +41,29 @@ void BitcoinExchange::processInput()
 
             firstLine = false;
             size_t pos = line.find(" | ");
-            if (pos == std::string::npos) {
+            if (pos == (size_t)-1) {
                 key = line;
                 value = "\0";
             } else {
                 key = line.substr(0, pos);
                 value = line.substr(pos + 3);
             }
-            if(key != "date" && value != "value"){
+            if(key != "date" && value != "value")
+            {
              this->file[key] = value;
              dataFound = true;
-            _File[index++] = std::make_pair(key, value); 
-            key.clear();
-            value.clear();
+             _File[index++] = std::make_pair(key, value); 
+             key.clear();
+             value.clear();
             }
             line.clear();
     }
     if (!dataFound)
-        throw std::runtime_error("The file does not contain any data after the header.");
-    // seewdata();
+        throw std::runtime_error("The file does not contain any data.");
 }
 
-void BitcoinExchange::seewdata()
+std::string formatFloat(float value)
 {
-    std::map<int, std::pair<std::string, std::string> >::iterator it;
-    for (it = _File.begin(); it != _File.end(); ++it) {
-        std::cout << "Index: " << it->first << ", Date: " << it->second.first << ", Value: " << it->second.second << std::endl;
-    }
-}
-
-std::string formatFloat(float value) {
     std::ostringstream oss;
     oss << std::fixed << std::setprecision(2) << value;
     std::string formatted = oss.str();
@@ -80,14 +73,17 @@ std::string formatFloat(float value) {
         {
             formatted.erase(formatted.size() - 1);
         }
+        if (formatted[formatted.size() - 1] == '.') {
+            formatted.erase(formatted.size() - 1);
+        }
     }
     return formatted;
 }
 
 void BitcoinExchange::processInputFile()
 {
-    std::map<std::string, std::string>::iterator it;
     std::map<int, std::pair<std::string, std::string> >::iterator it_2 = _File.begin();
+    std::map<std::string, std::string>::iterator it;
     std::map<std::string, std::string>::reverse_iterator i_r = data.rbegin();
 
     while (it_2 != _File.end())
@@ -106,34 +102,30 @@ void BitcoinExchange::processInputFile()
         if (it_2->second.first > i_r->first)
         {
             val1 = atof(i_r->second.c_str());
-            std::cout << it_2->second.first << " => " << it_2->second.second << " = " << formatFloat(val1 * val2) << std::endl;
+            std::cout << it_2->second.first << " => "<< it_2->second.second << " = " <<formatFloat(val1 * val2)<<std::endl;
         }
         else
-            std::cout << it_2->second.first << " => " << it_2->second.second << " = " << formatFloat(val1 * val2) << std::endl;
+            std::cout << it_2->second.first << " => "<< it_2->second.second << " = " <<formatFloat(val1 * val2)<<std::endl;
         it_2++;
     }
 }
-
 
 bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::string> >::iterator& it)
 {
 	std::string date = it->second.first;
 	std::string value = it->second.second;
 
-    // Check the date format
-    if (!string_to_date(date))
+    if (!check_date(date))
     {
         std::cerr << "Error: bad input => " << date << std::endl;
         return false;
     }
 
-    // Check the value format
     if (!check_atof(value))
         return false;
 
     float numValue = atof(value.c_str());
 
-    // Validate range of the value
     if (numValue < 0)
     {
         std::cerr << "Error: not a positive number." << std::endl;
@@ -144,11 +136,10 @@ bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::stri
         std::cerr << "Error: too large a number." << std::endl;
         return false;
     }
-
     return true;
 }
 
-bool BitcoinExchange::string_to_date(const std::string &time)
+bool BitcoinExchange::check_date(const std::string &time)
 {
     if (time.size() != 10 || time[4] != '-' || time[7] != '-') {
         return false;
@@ -179,7 +170,6 @@ bool BitcoinExchange::string_to_date(const std::string &time)
         }
     }
 
-    // Months with 30 days
     if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) {
         return false;
     }
@@ -189,12 +179,12 @@ bool BitcoinExchange::string_to_date(const std::string &time)
 
 bool BitcoinExchange::check_atof(std::string value)
 {
-int point = 0;
+    int point = 0;
 	for(unsigned long i=0; i < value.size(); i++)
 	{
 		if (value[i] == '-' && i ==0)
 			i++;
-		if ((value[i] < '0' || value[i] > '9') && value[i] != ' ' && value[i] != '.')
+		if ((value[i] < '0' || value[i] > '9') && value[i] != '.')
 		{	
 			std::cerr << "Error: bad value. " <<std::endl;
 			return false;
@@ -213,4 +203,18 @@ int point = 0;
 	return (true);
 }
 
-BitcoinExchange::~BitcoinExchange() {}
+BitcoinExchange::BitcoinExchange(BitcoinExchange const &copy)
+{
+	(*this) = copy;
+}
+
+BitcoinExchange &BitcoinExchange::operator=(BitcoinExchange const &copy)
+{
+	data = copy.data;
+	return(*this);
+}
+
+BitcoinExchange::~BitcoinExchange() { 
+    DataBase.close(); 
+    inputFile.close();
+}

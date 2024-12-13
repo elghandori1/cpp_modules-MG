@@ -6,7 +6,6 @@ int main(int argc, char* argv[])
         std::cerr << "Usage: " << argv[0] << " <input file>" << std::endl;
         return 1;
     }
-
     try {
         BitcoinExchange exchange(argv[1]);
         exchange.processInputFile();
