@@ -62,24 +62,6 @@ void BitcoinExchange::processInput()
         throw std::runtime_error("The file does not contain any data.");
 }
 
-std::string formatFloat(float value)
-{
-    std::ostringstream oss;
-    oss << std::fixed << std::setprecision(2) << value;
-    std::string formatted = oss.str();
-    size_t dotPos = formatted.find('.');
-    if (dotPos != std::string::npos) {
-        while (formatted[formatted.size() - 1] == '0')
-        {
-            formatted.erase(formatted.size() - 1);
-        }
-        if (formatted[formatted.size() - 1] == '.') {
-            formatted.erase(formatted.size() - 1);
-        }
-    }
-    return formatted;
-}
-
 void BitcoinExchange::processInputFile()
 {
     std::map<int, std::pair<std::string, std::string> >::iterator it_2 = _File.begin();
@@ -102,10 +84,10 @@ void BitcoinExchange::processInputFile()
         if (it_2->second.first > i_r->first)
         {
             val1 = atof(i_r->second.c_str());
-            std::cout << it_2->second.first << " => "<< it_2->second.second << " = " <<formatFloat(val1 * val2)<<std::endl;
+            std::cout << it_2->second.first << " => "<< it_2->second.second << " = " <<val1 * val2<<std::endl;
         }
         else
-            std::cout << it_2->second.first << " => "<< it_2->second.second << " = " <<formatFloat(val1 * val2)<<std::endl;
+            std::cout << it_2->second.first << " => "<< it_2->second.second << " = " <<val1 * val2<<std::endl;
         it_2++;
     }
 }
