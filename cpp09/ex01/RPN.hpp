@@ -1,4 +1,4 @@
-#include <list>
+#include <stack>
 #include <string>
 #include <sstream>
 #include <stdexcept>
@@ -8,7 +8,7 @@
 class RPN
 {
 	private:
-		std::list<int> container;
+		std::stack<int> container;
 		std::string expression;
 	public:
 		RPN();

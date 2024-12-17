@@ -3,7 +3,7 @@
 BitcoinExchange::BitcoinExchange(const std::string& filename) : DataBase("data.csv"), inputFile(filename.c_str())
 {
     if (!DataBase.is_open() || !inputFile.is_open()) {
-        throw std::runtime_error("Error: could not open files.");
+        throw std::runtime_error("could not open files.");
     }
     processDatabase();
     processInput();
@@ -14,7 +14,8 @@ void BitcoinExchange::processDatabase()
     std::string line, key, value;
     while (std::getline(DataBase, line))
     {
-        if (line != "date,exchange_rate" && !line.empty()) {
+        if (line != "date,exchange_rate" && !line.empty())
+        {
             key = line.substr(0, 10);
             value = line.substr(11);
             data[key] = value;
@@ -30,7 +31,6 @@ void BitcoinExchange::processInput()
     std::string line, key, value;
     int index = 0;
     bool firstLine = true;
-    bool dataFound = false;
     while (std::getline(inputFile, line))
     { 
             if(line.empty())
@@ -51,15 +51,13 @@ void BitcoinExchange::processInput()
             if(key != "date" && value != "value")
             {
              this->file[key] = value;
-             dataFound = true;
+
              _File[index++] = std::make_pair(key, value); 
              key.clear();
              value.clear();
             }
             line.clear();
     }
-    if (!dataFound)
-        throw std::runtime_error("The file does not contain any data.");
 }
 
 void BitcoinExchange::processInputFile()
@@ -75,10 +73,10 @@ void BitcoinExchange::processInputFile()
             it_2++;
             continue;
         }
-        it = data.lower_bound(it_2->second.first);
+        it = data.lower_bound(it_2->second.first);   
         if ((it != data.end()) && it->first > it_2->second.first)
             it--;
-
+     
         float val1 = atof(it->second.c_str());
         float val2 = atof(it_2->second.second.c_str());
         if (it_2->second.first > i_r->first)
@@ -103,7 +101,7 @@ bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::stri
         return false;
     }
 
-    if (!check_atof(value))
+    if (!check_value(value))
         return false;
 
     float numValue = atof(value.c_str());
@@ -159,7 +157,7 @@ bool BitcoinExchange::check_date(const std::string &time)
     return true;
 }
 
-bool BitcoinExchange::check_atof(std::string value)
+bool BitcoinExchange::check_value(std::string value)
 {
     int point = 0;
 	for(unsigned long i=0; i < value.size(); i++)
