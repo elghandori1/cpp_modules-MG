@@ -19,10 +19,11 @@ private:
     bool check_value(std::string value);
     void processDatabase();
     void processInput();
+    void processInputFile(void);
 public:
     BitcoinExchange(const std::string& Filename);
     BitcoinExchange(BitcoinExchange const &copy);
     BitcoinExchange &operator=(BitcoinExchange const &copy);
 	~BitcoinExchange();
-    void processInputFile(void);
+    
 };

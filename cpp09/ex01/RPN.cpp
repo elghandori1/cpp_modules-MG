@@ -10,21 +10,20 @@ bool RPN::isOperator(char c) {
 
 void RPN::getResult()
 {
-    size_t start = 0;
-    while (start < expression.length())
+    size_t i = 0;
+    while (i < expression.length())
     {
-        // Skip leading spaces
-        while (start < expression.length() && std::isspace(expression[start]))
-            start++;
+        while (i < expression.length() && std::isspace(expression[i]))
+            i++;
 
-        if (start >= expression.length())
+        if (i >= expression.length())
             break;
 
-        size_t end = start;
-        while (end < expression.length() && !std::isspace(expression[end]))
-            end++;
+        size_t j = i;
+        while (j < expression.length() && !std::isspace(expression[j]))
+            j++;
 
-        std::string token = expression.substr(start, end - start);
+        std::string token = expression.substr(i, j - i);
         if (token.length() == 1 && std::isdigit(token[0]))
             container.push(atoi(token.c_str()));
 
@@ -53,8 +52,7 @@ void RPN::getResult()
         } else {
            throw std::runtime_error("Error");
         }
-        
-        start = end;
+        i = j;
     } 
 
     if (container.size() != 1) {

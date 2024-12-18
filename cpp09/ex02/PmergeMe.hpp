@@ -24,6 +24,10 @@ public:
     void run(int argc, char* argv[]);
     void printContainerVector(const std::vector<int>& container);
     void mergeInsertSortVector(std::vector<int>& container, int start, int end);
-    void merge(std::vector<int>& container, int start, int mid, int end);
+    void mergeSortVector(std::vector<int>& container, int start, int mid, int end);
+    
+    void printContainerDeque(const std::deque<int>& container);
+    void mergeInsertSortDeque(std::deque<int>& container, int start, int end);
+    void mergeSortDeque(std::deque<int>& container, int start, int mid, int end);
 
 };

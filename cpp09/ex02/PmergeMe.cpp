@@ -31,39 +31,110 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& container, int start, int
     }
 
     int mid = start + (end - start) / 2;
-
     mergeInsertSortVector(container, start, mid);
     mergeInsertSortVector(container, mid + 1, end);
-    merge(container, start, mid, end);
+    mergeSortVector(container, start, mid, end);
 }
 
-void PmergeMe::merge(std::vector<int>& container, int start, int mid, int end)
+void PmergeMe::mergeSortVector(std::vector<int>& container, int start, int mid, int end)
 {
     std::vector<int> left;
     for (int i = start; i <= mid; ++i){
         left.push_back(container[i]);
     }
+
     std::vector<int> right;
     for (int i = mid + 1; i <= end; ++i) {
         right.push_back(container[i]);
     }
+    
     size_t i = 0, j = 0, k = start;
 
     while (i < left.size() && j < right.size())
     {
         if (left[i] <= right[j]) {
-            container[k++] = left[i++]; 
+            container[k] = left[i]; 
+            k++;
+            i++;
         } else {
-            container[k++] = right[j++];
+            container[k] = right[j];
+            k++;
+            j++;
         }
     }
 
     while (i < left.size()) {
-        container[k++] = left[i++];
-    }
+        container[k] = left[i];
+        k++;
+        i++;
+    } 
 
     while (j < right.size()) {
-        container[k++] = right[j++];
+        container[k] = right[j];
+        k++;
+        j++;
+    }
+}
+
+//----------- deque :
+
+void PmergeMe::printContainerDeque(const std::deque<int>& container)
+{
+    for (std::deque<int>::const_iterator it = container.begin(); it != container.end(); ++it)
+    {
+        std::cout << *it << " ";
+    }
+}
+
+void PmergeMe::mergeInsertSortDeque(std::deque<int>& container, int start, int end)
+{
+    if (start >= end) {
+        return;
+    }
+
+    int mid = start + (end - start) / 2;
+    mergeInsertSortDeque(container, start, mid);
+    mergeInsertSortDeque(container, mid + 1, end);
+    mergeSortDeque(container, start, mid, end);
+}
+
+void PmergeMe::mergeSortDeque(std::deque<int>& container, int start, int mid, int end)
+{
+    std::deque<int> left;
+    for (int i = start; i <= mid; ++i){
+        left.push_back(container[i]);
+    }
+
+    std::deque<int> right;
+    for (int i = mid + 1; i <= end; ++i) {
+        right.push_back(container[i]);
+    }
+    
+    size_t i = 0, j = 0, k = start;
+
+    while (i < left.size() && j < right.size())
+    {
+        if (left[i] <= right[j]) {
+            container[k] = left[i]; 
+            k++;
+            i++;
+        } else {
+            container[k] = right[j];
+            k++;
+            j++;
+        }
+    }
+
+    while (i < left.size()) {
+        container[k] = left[i];
+        k++;
+        i++;
+    } 
+
+    while (j < right.size()) {
+        container[k] = right[j];
+        k++;
+        j++;
     }
 }
 
@@ -97,18 +168,31 @@ void PmergeMe::run(int argc, char* argv[])
     std::cout << "Before: ";
     printContainerVector(vec);
     std::cout << std::endl;
+
     clock_t start = clock();
     int start_c = 0;
     int end_c = vec.size() - 1;
     mergeInsertSortVector(vec,start_c,end_c);
     clock_t end = clock();
-    double vecTime = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000000;
+    double vecTime = static_cast<double>(end - start);
+
+    start = clock();
+    start_c = 0;
+    end_c = deq.size() - 1;
+    mergeInsertSortDeque(deq,start_c,end_c);
+    end = clock();
+    double deqTime = static_cast<double>(end - start);
 
     std::cout << "After: ";
     printContainerVector(vec);
     std::cout << std::endl;
+
     std::cout << std::fixed << std::setprecision(5);
     std::cout << "Time to process a range of " << vec.size() 
               << " elements with std::vector: " << vecTime << " us\n";
+
+    std::cout << std::fixed << std::setprecision(5);
+    std::cout << "Time to process a range of " << deq.size() 
+              << " elements with std::deque: " << deqTime << " us\n";
     
 }

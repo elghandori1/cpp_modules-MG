@@ -51,13 +51,13 @@ void BitcoinExchange::processInput()
             if(key != "date" && value != "value")
             {
              this->file[key] = value;
-
              _File[index++] = std::make_pair(key, value); 
              key.clear();
              value.clear();
             }
             line.clear();
     }
+    processInputFile();
 }
 
 void BitcoinExchange::processInputFile()
@@ -104,8 +104,7 @@ bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::stri
     if (!check_value(value))
         return false;
 
-    float numValue = atof(value.c_str());
-
+    double numValue = atof(value.c_str());
     if (numValue < 0)
     {
         std::cerr << "Error: not a positive number." << std::endl;
@@ -121,7 +120,8 @@ bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::stri
 
 bool BitcoinExchange::check_date(const std::string &time)
 {
-    if (time.size() != 10 || time[4] != '-' || time[7] != '-') {
+    if (time.size() != 10 || time[4] != '-' || time[7] != '-')
+    {
         return false;
     }
     std::string year_str = time.substr(0, 4);
@@ -160,27 +160,40 @@ bool BitcoinExchange::check_date(const std::string &time)
 bool BitcoinExchange::check_value(std::string value)
 {
     int point = 0;
-	for(unsigned long i=0; i < value.size(); i++)
-	{
-		if (value[i] == '-' && i ==0)
-			i++;
-		if ((value[i] < '0' || value[i] > '9') && value[i] != '.')
-		{	
-			std::cerr << "Error: bad value. " <<std::endl;
-			return false;
-		}
-		else if (value[i] == '.' && i > 1)
-		{
-			point++;
-			if (value[i -1] < '0' || value[i - 1] > '9' || point > 1 
-				|| ((i < value.size() && ( value[i + 1] < '0' || value[i + 1] > '9'))))
-			{
-				std::cerr << "Error: bad value. " <<std::endl;
-				return false;
-			}
-		}
-	}
-	return (true);
+    bool plus_seen = false;
+    
+    for (unsigned long i = 0; i < value.size(); i++)
+    {
+        if (value[i] == '-' && i == 0) {
+            continue;
+        }
+        if (value[i] == '+')
+        {
+            if (plus_seen || i != 0) {
+                std::cerr << "Error: bad input => " << value << std::endl;
+                return false;
+            }
+            plus_seen = true;
+            continue;
+        }
+       if (value[i] == '.') {
+            if (point > 0) {
+                std::cerr << "Error: bad input => " << value << std::endl;
+                return false;
+            }
+            if (plus_seen) {
+                std::cerr << "Error: bad input => " << value << std::endl;
+                return false;
+            }
+            point++;
+            continue;
+        }
+        if (value[i] < '0' || value[i] > '9') {
+            std::cerr << "Error: bad input => " << value << std::endl;
+            return false;
+        }
+    }
+    return true;
 }
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange const &copy)

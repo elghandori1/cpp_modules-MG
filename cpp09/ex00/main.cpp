@@ -8,7 +8,6 @@ int main(int argc, char* argv[])
     }
     try {
         BitcoinExchange exchange(argv[1]);
-        exchange.processInputFile();
     }
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
