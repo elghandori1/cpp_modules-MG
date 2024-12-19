@@ -16,9 +16,9 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &copy)
 
 PmergeMe::~PmergeMe(){}
 
-void PmergeMe::printContainerVector(const std::vector<int>& container)
+void PmergeMe::printContainerVector(std::vector<int>& container)
 {
-    for (std::vector<int>::const_iterator it = container.begin(); it != container.end(); ++it)
+    for (std::vector<int>::iterator it = container.begin(); it != container.end(); ++it)
     {
         std::cout << *it << " ";
     }
@@ -27,11 +27,11 @@ void PmergeMe::printContainerVector(const std::vector<int>& container)
 void PmergeMe::mergeInsertSortVector(std::vector<int>& container, int start, int end)
 {
     if (start >= end) {
-        return;
+        return; 
     }
 
     int mid = start + (end - start) / 2;
-    mergeInsertSortVector(container, start, mid);
+    mergeInsertSortVector(container, start, mid); 
     mergeInsertSortVector(container, mid + 1, end);
     mergeSortVector(container, start, mid, end);
 }
@@ -47,9 +47,8 @@ void PmergeMe::mergeSortVector(std::vector<int>& container, int start, int mid, 
     for (int i = mid + 1; i <= end; ++i) {
         right.push_back(container[i]);
     }
-    
+        
     size_t i = 0, j = 0, k = start;
-
     while (i < left.size() && j < right.size())
     {
         if (left[i] <= right[j]) {
@@ -78,9 +77,9 @@ void PmergeMe::mergeSortVector(std::vector<int>& container, int start, int mid, 
 
 //----------- deque :
 
-void PmergeMe::printContainerDeque(const std::deque<int>& container)
+void PmergeMe::printContainerDeque(std::deque<int>& container)
 {
-    for (std::deque<int>::const_iterator it = container.begin(); it != container.end(); ++it)
+    for (std::deque<int>::iterator it = container.begin(); it != container.end(); ++it)
     {
         std::cout << *it << " ";
     }
@@ -145,11 +144,11 @@ int PmergeMe::checkAtoi(char* av)
     for (int i = 0; i < (int)str.size(); i++)
     {
         if (av[i] < '0' || av[i] > '9')
-            throw(std::runtime_error("Invalid Character."));
+            throw(std::runtime_error("Error"));
     }
     tmp = atol(av);
     if (tmp > INT_MAX)
-        throw(std::runtime_error("Invalid Number."));
+        throw(std::runtime_error("Error"));
     return (static_cast<int>(tmp));
 }
 
@@ -169,19 +168,19 @@ void PmergeMe::run(int argc, char* argv[])
     printContainerVector(vec);
     std::cout << std::endl;
 
-    clock_t start = clock();
+    clock_t start_vec = std::clock();
     int start_c = 0;
     int end_c = vec.size() - 1;
     mergeInsertSortVector(vec,start_c,end_c);
-    clock_t end = clock();
-    double vecTime = static_cast<double>(end - start);
+    clock_t end_vec = std::clock();
+    double vecTime = static_cast<double>(end_vec - start_vec) / CLOCKS_PER_SEC * 1000000;;
 
-    start = clock();
+    clock_t start_deq = std::clock();
     start_c = 0;
     end_c = deq.size() - 1;
     mergeInsertSortDeque(deq,start_c,end_c);
-    end = clock();
-    double deqTime = static_cast<double>(end - start);
+    clock_t end_deq = std::clock();
+    double deqTime = static_cast<double>(end_deq - start_deq) / CLOCKS_PER_SEC * 1000000;;
 
     std::cout << "After: ";
     printContainerVector(vec);

@@ -8,7 +8,8 @@
 #include <cstring>
 #include <sstream>
 
-class BitcoinExchange {
+class BitcoinExchange
+{
 private: 
     std::ifstream DataBase, inputFile; 
     std::map<std::string ,std::string> data;
@@ -21,6 +22,7 @@ private:
     void processInput();
     void processInputFile(void);
 public:
+    BitcoinExchange();
     BitcoinExchange(const std::string& Filename);
     BitcoinExchange(BitcoinExchange const &copy);
     BitcoinExchange &operator=(BitcoinExchange const &copy);

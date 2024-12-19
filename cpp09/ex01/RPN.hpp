@@ -12,7 +12,7 @@ class RPN
 		std::string expression;
 	public:
 		RPN();
-		RPN(std::string const &arg);
+		RPN(std::string arg);
 		RPN(const RPN &copy);
 		RPN &operator=(const RPN &copy);
 		~RPN();

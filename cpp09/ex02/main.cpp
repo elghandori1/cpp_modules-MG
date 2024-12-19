@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
     {
     if (argc < 2)
     {
-        throw(std::runtime_error("Error."));
+        throw(std::runtime_error("Error"));
     }
         PmergeMe pm;
         pm.run(argc, argv);

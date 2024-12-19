@@ -2,7 +2,7 @@
 
 RPN::RPN() {}
 
-RPN::RPN(std::string const &arg) : expression(arg) {}
+RPN::RPN(std::string arg) : expression(arg) {}
 
 bool RPN::isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/');

@@ -1,5 +1,7 @@
 #include "BitcoinExchange.hpp"
 
+BitcoinExchange::BitcoinExchange(){}
+
 BitcoinExchange::BitcoinExchange(const std::string& filename) : DataBase("data.csv"), inputFile(filename.c_str())
 {
     if (!DataBase.is_open() || !inputFile.is_open()) {
@@ -19,10 +21,7 @@ void BitcoinExchange::processDatabase()
             key = line.substr(0, 10);
             value = line.substr(11);
             data[key] = value;
-            key.clear();
-            value.clear();
         }
-        line.clear();
     }
 }
 
@@ -52,10 +51,7 @@ void BitcoinExchange::processInput()
             {
              this->file[key] = value;
              _File[index++] = std::make_pair(key, value); 
-             key.clear();
-             value.clear();
             }
-            line.clear();
     }
     processInputFile();
 }
@@ -159,42 +155,39 @@ bool BitcoinExchange::check_date(const std::string &time)
 
 bool BitcoinExchange::check_value(std::string value)
 {
+    if ((value.size() == 2) && ((value[0] == '-' || value[0] == '+')&& value[1] == '.'))
+    {
+        std::cerr << "Error: bad input => " << value << std::endl;
+        return false;
+    }
+
     int point = 0;
-    bool plus_seen = false;
-    
     for (unsigned long i = 0; i < value.size(); i++)
     {
-        if (value[i] == '-' && i == 0) {
-            continue;
-        }
-        if (value[i] == '+')
+        if ((value[i] == '+' || value[i] == '-' ) && i == 0)
         {
-            if (plus_seen || i != 0) {
-                std::cerr << "Error: bad input => " << value << std::endl;
-                return false;
-            }
-            plus_seen = true;
-            continue;
+            i++;
         }
-       if (value[i] == '.') {
-            if (point > 0) {
-                std::cerr << "Error: bad input => " << value << std::endl;
-                return false;
-            }
-            if (plus_seen) {
-                std::cerr << "Error: bad input => " << value << std::endl;
-                return false;
-            }
-            point++;
-            continue;
-        }
-        if (value[i] < '0' || value[i] > '9') {
+        if ((value[i] < '0' || value[i] > '9') && value[i] != ' ' && value[i] != '.')
+        {
             std::cerr << "Error: bad input => " << value << std::endl;
             return false;
         }
+        else if (value[i] == '.' && i > 1)
+        {
+            point++;
+            if (value[i - 1] < '0' || value[i - 1] > '9' || point > 1 ||
+                ((i < value.size() && (value[i + 1] < '0' || value[i + 1] > '9'))))
+            {
+                std::cerr << "Error: bad input => " << value << std::endl;
+                return false;
+            }
+        }
     }
+
     return true;
 }
+
 
 BitcoinExchange::BitcoinExchange(BitcoinExchange const &copy)
 {
