@@ -100,7 +100,7 @@ bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::stri
     if (!check_value(value))
         return false;
 
-    double numValue = atof(value.c_str());
+    float numValue = atof(value.c_str());
     if (numValue < 0)
     {
         std::cerr << "Error: not a positive number." << std::endl;
@@ -114,12 +114,13 @@ bool BitcoinExchange::check_file(std::map<int , std::pair<std::string, std::stri
     return true;
 }
 
-bool BitcoinExchange::check_date(const std::string &time)
+bool BitcoinExchange::check_date(std::string time)
 {
-    if (time.size() != 10 || time[4] != '-' || time[7] != '-')
+    if (time[4] != '-' || time[7] != '-')
     {
         return false;
     }
+
     std::string year_str = time.substr(0, 4);
     std::string month_str = time.substr(5, 2);
     std::string day_str = time.substr(8, 2);
@@ -155,12 +156,20 @@ bool BitcoinExchange::check_date(const std::string &time)
 
 bool BitcoinExchange::check_value(std::string value)
 {
+    if(value[0] == '\0')
+    {
+        std::cerr << "Error: bad input => "<< std::endl;
+        return false;
+    }
     if ((value.size() == 2) && ((value[0] == '-' || value[0] == '+')&& value[1] == '.'))
     {
         std::cerr << "Error: bad input => " << value << std::endl;
         return false;
     }
-
+    if((value.size() == 1) && value[0] == '.'){
+        std::cerr << "Error: bad input => " << value << std::endl;
+        return false;
+    }
     int point = 0;
     for (unsigned long i = 0; i < value.size(); i++)
     {
@@ -168,7 +177,7 @@ bool BitcoinExchange::check_value(std::string value)
         {
             i++;
         }
-        if ((value[i] < '0' || value[i] > '9') && value[i] != ' ' && value[i] != '.')
+        if ((value[i] < '0' || value[i] > '9') && value[i] != '.')
         {
             std::cerr << "Error: bad input => " << value << std::endl;
             return false;
@@ -204,3 +213,4 @@ BitcoinExchange::~BitcoinExchange() {
     DataBase.close(); 
     inputFile.close();
 }
+

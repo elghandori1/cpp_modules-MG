@@ -8,8 +8,7 @@ int main(int argc, char **argv)
     }
     try {
         RPN rpn(argv[1]);
-        RPN r2(rpn);
-        r2.getResult();
+        rpn.getResult();
     } catch (const std::exception &e) {
         std::cout << e.what() << std::endl;
         return 1;

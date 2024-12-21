@@ -16,7 +16,7 @@ private:
     std::map<std::string ,std::string> file;
     std::map<int , std::pair<std::string, std::string> > _File;
     bool check_file(std::map<int , std::pair<std::string, std::string> >::iterator& it);
-    bool check_date(const std::string &time);
+    bool check_date(std::string time);
     bool check_value(std::string value);
     void processDatabase();
     void processInput();
@@ -27,5 +27,4 @@ public:
     BitcoinExchange(BitcoinExchange const &copy);
     BitcoinExchange &operator=(BitcoinExchange const &copy);
 	~BitcoinExchange();
-    
 };

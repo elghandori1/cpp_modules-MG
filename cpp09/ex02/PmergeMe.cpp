@@ -139,14 +139,13 @@ void PmergeMe::mergeSortDeque(std::deque<int>& container, int start, int mid, in
 
 int PmergeMe::checkAtoi(char* av)
 {
-    long long tmp;
     std::string str(av);
     for (int i = 0; i < (int)str.size(); i++)
     {
         if (av[i] < '0' || av[i] > '9')
             throw(std::runtime_error("Error"));
     }
-    tmp = atol(av);
+    long long tmp = atol(av);
     if (tmp > INT_MAX)
         throw(std::runtime_error("Error"));
     return (static_cast<int>(tmp));
@@ -154,9 +153,6 @@ int PmergeMe::checkAtoi(char* av)
 
 void PmergeMe::run(int argc, char* argv[])
 {
-    std::vector<int> vec;
-    std::deque<int> deq;
-
     for (int i = 1; i < argc; ++i)
     {
         int num = checkAtoi(argv[i]);
@@ -173,17 +169,17 @@ void PmergeMe::run(int argc, char* argv[])
     int end_c = vec.size() - 1;
     mergeInsertSortVector(vec,start_c,end_c);
     clock_t end_vec = std::clock();
-    double vecTime = static_cast<double>(end_vec - start_vec) / CLOCKS_PER_SEC * 1000000;;
+    double vecTime = static_cast<double>(end_vec - start_vec) / CLOCKS_PER_SEC * 1000000;
 
     clock_t start_deq = std::clock();
     start_c = 0;
     end_c = deq.size() - 1;
     mergeInsertSortDeque(deq,start_c,end_c);
     clock_t end_deq = std::clock();
-    double deqTime = static_cast<double>(end_deq - start_deq) / CLOCKS_PER_SEC * 1000000;;
-
+    double deqTime = static_cast<double>(end_deq - start_deq) / CLOCKS_PER_SEC * 1000000;
+    
     std::cout << "After: ";
-    printContainerVector(vec);
+    printContainerDeque(deq);
     std::cout << std::endl;
 
     std::cout << std::fixed << std::setprecision(5);
